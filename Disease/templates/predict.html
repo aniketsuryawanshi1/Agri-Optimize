@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+    .custom-gradient-bg {
+        background: linear-gradient(-135deg, #ef5330, #6dbb46);
+        color: white;
+    }
+</style>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="card mt-5 bg-light custom-gradient-bg text-white">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4"><i class="fas fa-seedling"></i> {{ title }}</h2>
+                    <img src="{{ image_url }}" class="img-fluid rounded mx-auto d-block mb-4" alt="Disease Image">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mt-5 bg-light custom-gradient-bg">
+                <div class="card-body">
+                    <p class="card-text"><strong>Description :</strong>{{ description }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mt-5 bg-light custom-gradient-bg">
+                <div class="card-body">
+                    <p class="card-text"><strong>Preventive Steps:</strong> {{ prevent }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mt-5 bg-light custom-gradient-bg">
+                <div class="card-body text-center">
+                    <h3>Supplement Recommendation</h3>
+                    <p><strong>Supplement Name:</strong> {{ supplement_name }}</p>
+                    <img src="{{ supplement_image_url }}" class="img-thumbnail mb-2" alt="Supplement Image">
+                    <p><a href="{{ supplement_buy_link }}" class="btn btn-primary"><i class="fas fa-shopping-cart"></i> Buy Now</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

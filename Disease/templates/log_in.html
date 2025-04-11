@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<style>
+
+    section {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(-135deg, #ef5330, #6dbb46);
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .container {
+        background-color: whitesmoke;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        width: 400px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+        position: relative;
+    }
+
+    .form-group input {
+        width: calc(100% - 5px);
+        padding: 10px 10px 10px 30px; /* Adjusted padding to accommodate the icon */
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        outline: none;
+        transition: border-color 0.3s;
+    }
+
+    .form-group i {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6dbb46;
+    }
+
+    .form-group input[type="submit"] {
+        width: calc(100% - 40px);
+        background: linear-gradient(-135deg, #ef5330, #6dbb46);
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background 0.3s;
+        margin: auto; /* Center the button */
+        display: block;
+    }
+
+    .form-group input[type="submit"]:hover {
+        background: linear-gradient(-135deg, #6dbb46, #ef5330);
+    }
+
+    .additional-options {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .additional-options a {
+        color: #6dbb46;
+        text-decoration: none;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 480px) {
+        .container {
+            width: calc(100% - 30px);
+            margin-left: 15px;
+            margin-right: 15px;
+        }
+    }
+</style>
+<section>
+    <div class="container">
+        <h2 style="text-align: center;"><i class="fas fa-sign-in-alt" style="color: #6dbb46;"></i> Login</h2>
+        <form method="post" action="{% url 'log_in' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <i class="fas fa-envelope"></i>
+                <input type="text" name="username" id="username" placeholder="Enter email address" required>
+            </div>
+            <div class="form-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" name="password" id="password" placeholder="Password" required>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Login">
+            </div>
+        </form>
+        <div class="additional-options">
+            <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
+        </div>
+    </div>
+</section>
+{% endblock %}

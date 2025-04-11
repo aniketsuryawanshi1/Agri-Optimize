@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+  
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+    margin: 0;
+    padding: 0;
+  }
+  
+
+  #container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(-135deg, #ef5330, #6dbb46);
+  }
+  #drop-area {
+    border: 2px dashed #4CAF50;
+    border-radius: 10px;
+    padding: 20px;
+    cursor: pointer;
+    background-color: #f9f9f9;
+    text-align: center;
+  }
+  #drop-area.highlight {
+    border-color: #45a049;
+    background-color: #f6f6f6;
+  }
+  #preview {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .card {
+    width: 200px;
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  .card img {
+    width: 100%;
+    height: auto;
+  }
+  .card button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 0 0 10px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  .card button:hover {
+    background-color: #45a049;
+  }
+  #file-input {
+    display: none;
+  }
+  #choose-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  #choose-btn:hover {
+    background-color: #45a049;
+  }
+  h1 {
+    color: #f6f6f6;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  
+</style>
+
+
+
+<div id="container">
+    <h1><i class="fas fa-seedling"></i> Plant Disease Detection</h1>
+    <form method="post" action="{% url 'accept' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div id="drop-area" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);"
+            ondragenter="dragEnterHandler(event);" ondragleave="dragLeaveHandler(event);">
+            <p><i class="fas fa-cloud-upload-alt"></i> Drag & Drop image here</p>
+            <button type="button" id="choose-btn" onclick="chooseFile()"><i class="fas fa-file-upload"></i> Or
+                Choose File</button>
+            <input type="file" id="file-input" name="image" onchange="handleFiles(this.files)">
+        </div>
+        <div id="preview"></div>
+        <div class="text-center">
+            <button style="color: white; background-color: orange; padding: 5px; border: none; border-radius: 5px;" type="submit">Submit</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    function dropHandler(event) {
+        event.preventDefault();
+        var files = event.dataTransfer.files;
+        if (files.length > 0) {
+            handleFiles(files);
+        }
+    }
+
+    function dragOverHandler(event) {
+        event.preventDefault();
+        event.dataTransfer.dropEffect = 'copy';
+    }
+
+    function dragEnterHandler(event) {
+        event.preventDefault();
+        document.getElementById('drop-area').classList.add('highlight');
+    }
+
+    function dragLeaveHandler(event) {
+        event.preventDefault();
+        document.getElementById('drop-area').classList.remove('highlight');
+    }
+
+    function chooseFile() {
+        document.getElementById('file-input').click();
+    }
+
+    function handleFiles(files) {
+        var preview = document.getElementById('preview');
+        preview.innerHTML = '';
+
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            if (!file.type.startsWith('image/')) {
+                continue;
+            }
+            var card = document.createElement('div');
+            card.classList.add('card');
+            var img = document.createElement('img');
+            img.src = URL.createObjectURL(file);
+            img.onload = function () {
+                URL.revokeObjectURL(this.src);
+            }
+            card.appendChild(img);
+            var button = document.createElement('button');
+            button.textContent = 'Change Image';
+            button.onclick = function () {
+                chooseFile();
+            };
+            card.appendChild(button);
+            preview.appendChild(card);
+        }
+    }
+</script>
+
+
+
+{% endblock  %}

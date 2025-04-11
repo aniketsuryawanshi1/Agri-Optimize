@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content  %}
+<style>
+    hr{
+        border: none;
+        background-color: orange;
+        height: 5px;
+    }
+    section{
+        background: linear-gradient(-135deg, #ef5330, #6dbb46);
+        padding: 20px;
+        color: black;
+        margin: 20px 0;
+        border: 1px solid black;
+
+        
+      }
+</style>
+<section>
+<h1>{{ title }}</h1>
+<hr>
+    <h2>Fertilizer Recommendation: </h2>
+    <p>{{ recommendation }}</p>
+</section>
+{% endblock  %}

@@ -1,0 +1,16 @@
+
+/*Nav Bar*/
+.navbar-brand i {
+    margin-right: 10px;
+}
+.nav-tabs .nav-link {
+    color: #FFA500; /* Orange color for the nav tabs */
+    border-bottom: 2px solid transparent;
+    transition: border-bottom-color 0.3s;
+}
+.nav-tabs .nav-link:hover {
+    border-bottom-color: #FFA500; /* Apply bottom border on hover */
+}
+
+
+/*....*/

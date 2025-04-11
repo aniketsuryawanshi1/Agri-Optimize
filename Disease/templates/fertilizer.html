@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+  
+  <style>
+    section{
+      font-family: Arial, sans-serif;
+      padding: 10px;
+      background: linear-gradient(-135deg, #ef5330, #6dbb46);
+    }
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 40px;
+      background-color: #F0F4F8;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    label {
+      font-weight: bold;
+      color: #555;
+      display: flex;
+      align-items: center; /* Align icon and text vertically */
+      margin-bottom: 10px;
+    }
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background-color: #45a049;
+    }
+
+    /* Icon styles */
+    .icon {
+      margin-right: 10px; /* Add spacing between icon and text */
+       /* Adjust icon size */
+      color: green; /* Adjust icon color */
+    }
+
+    .icon:hover {
+      transform: scale(1.2); /* Add hover effect to icon */
+    }
+  </style>
+<section>
+  <div class="container">
+    <h1><i class="icon fas fa-seedling"></i> Soil Fertilization </h1>
+    <hr>
+    <form  method="post" action="{% url 'fertilizer' %}">
+      {% csrf_token %}
+      <label for="Nitrogen"><i class="fas fa-flask"></i>&nbsp; Nitrogen:</label> <!-- Add space between icon and label -->
+      <input type="number" id="Nitrogen" name="nitrogen" placeholder="Enter the value (example:50)" required>
+      <label for="Phosphorous"><i class="fas fa-flask"></i>&nbsp; Phosphorous:</label> <!-- Add space between icon and label -->
+      <input type="number" id="Phosphorous" name="phosphorous" placeholder="Enter the value (example:50)" required>
+      <label for="Potassium"><i class="fas fa-flask"></i>&nbsp; Potassium:</label> <!-- Add space between icon and label -->
+      <input type="number" id="Potassium" name="pottasium" placeholder="Enter the value (example:50)" required>
+      <label for="crop"><i class="icon fas fa-seedling"></i>&nbsp; Crop you want to grow:</label> <!-- Add space between icon and label -->
+      <select name="cropname" id="crop" placeholder="Select a crop" required>
+        <option value="" selected disabled>Select crop</option>
+        <option selected>Select crop</option>
+        <option>rice</option>
+        <option>maize</option>
+        <option>chickpea</option>
+        <option>kidneybeans</option>
+        <option>pigeonpeas</option>
+        <option>mothbeans</option>
+        <option>mungbean</option>
+        <option>blackgram</option>
+        <option>lentil</option>
+        <option>pomegranate</option>
+        <option>banana</option>
+        <option>mango</option>
+        <option>grapes</option>
+        <option>watermelon</option>
+        <option>muskmelon</option>
+        <option>apple</option>
+        <option>orange</option>
+        <option>papaya</option>
+        <option>coconut</option>
+        <option>cotton</option>
+        <option>jute</option>
+        <option>coffee</option>
+      </select>
+      <button type="submit" class="btn">Predict</button>
+    </form>
+  </div>
+</section>
+{% endblock %}

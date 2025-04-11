@@ -1,0 +1,368 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+  
+    <style>
+        section {
+            padding: 10px;
+            background: linear-gradient(-135deg, #ef5330, #6dbb46);/* Set background color */
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 600px; /* Adjusted max-width for responsiveness */
+            margin: 20px auto;
+            background-color: #F0F4F8; 
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Adjusted box shadow */
+        }
+
+        h1 {
+            text-align: center;
+            color: orange; /* Adjusted heading color */
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: flex; /* Align icons and text in one line */
+            align-items: center; /* Center vertically */
+            font-size: 16px;
+            font-weight: bold;
+            color: #333; /* Adjusted label color */
+            margin-bottom: 5px;
+        }
+
+        label i {
+            margin-right: 10px; /* Add spacing between icon and text */
+        }
+
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            box-sizing: border-box;
+            margin-top: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            background-color: #007bff;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px; /* Adjust padding for smaller screens */
+                margin-left: 10px; /* Add margin from left for mobile devices */
+                margin-right: 10px; /* Add margin from right for mobile devices */
+            }
+
+            label i {
+                font-size: 20px; /* Increase icon size for smaller screens */
+            }
+        }
+    </style>
+<section>
+    <div class="container">
+        <h1><i class="fas fa-seedling" style="color: green;"></i> Crop Recommendation</h1> <!-- Added icon -->
+        <hr>
+        <form method="post" action="{% url 'crop' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="Nitrogen"><i class="fas fa-flask"></i> Nitrogen</label> <!-- Added icon -->
+                <input type="number" id="nitrogen" name="nitrogen" placeholder="Enter the value (example: 50)" required>
+            </div>
+            <div class="form-group">
+                <label for="Phosphorous"><i class="fas fa-flask"></i> Phosphorous</label> <!-- Added icon -->
+                <input type="number" id="phosphorous" name="phosphorous" placeholder="Enter the value (example: 50)" required>
+            </div>
+            <div class="form-group">
+                <label for="Potassium"><i class="fas fa-flask"></i> Potassium</label> <!-- Added icon -->
+                <input type="number" id="pottasium" name="pottasium" placeholder="Enter the value (example: 50)" required>
+            </div>
+            <div class="form-group">
+                <label for="ph"><i class="fas fa-water"></i> pH level</label> <!-- Added icon -->
+                <input type="number" step="0.01" id="ph" name="ph" placeholder="Enter the value" required>
+            </div>
+            <div class="form-group">
+                <label for="Rainfall"><i class="fas fa-cloud-rain"></i> Rainfall (in mm)</label> <!-- Added icon -->
+                <input type="number" step="0.01" id="rainfall" name="rainfall" placeholder="Enter the value" required>
+            </div>
+            <div class="form-group">
+                <label for="State"><i class="fas fa-map-marker-alt"></i> State</label> <!-- Added icon -->
+                <select onchange="print_city('state', this.selectedIndex);" id="sts" name="stt" required></select>
+                <br>
+                <label for="City"><i class="fas fa-map-marker-alt"></i> City</label> <!-- Added icon -->
+                <select id="state" name="city" required></select>
+                <script>
+                    function print_state(ele) {
+                        var states = document.getElementById(ele);
+                        states.options[0] = new Option('Select State', '');
+                        states.options[1] = new Option('Andhra Pradesh', 'Andhra_Pradesh');
+                        states.options[2] = new Option('Arunachal Pradesh', 'Arunachal_Pradesh');
+                        states.options[3] = new Option('Assam', 'Assam');
+                        states.options[4] = new Option('Bihar', 'Bihar');
+                        states.options[5] = new Option('Chhattisgarh', 'Chhattisgarh');
+                        states.options[6] = new Option('Goa', 'Goa');
+                        states.options[7] = new Option('Gujarat', 'Gujarat');
+                        states.options[8] = new Option('Haryana', 'Haryana');
+                        states.options[9] = new Option('Himachal Pradesh', 'Himachal_Pradesh');
+                        states.options[10] = new Option('Jharkhand', 'Jharkhand');
+                        states.options[11] = new Option('Karnataka', 'Karnataka');
+                        states.options[12] = new Option('Kerala', 'Kerala');
+                        states.options[13] = new Option('Madhya Pradesh', 'Madhya_Pradesh');
+                        states.options[14] = new Option('Maharashtra', 'Maharashtra');
+                        states.options[15] = new Option('Manipur', 'Manipur');
+                        states.options[16] = new Option('Meghalaya', 'Meghalaya');
+                        states.options[17] = new Option('Mizoram', 'Mizoram');
+                        states.options[18] = new Option('Nagaland', 'Nagaland');
+                        states.options[19] = new Option('Odisha', 'Odisha');
+                        states.options[20] = new Option('Punjab', 'Punjab');
+                        states.options[21] = new Option('Rajasthan', 'Rajasthan');
+                        states.options[22] = new Option('Sikkim', 'Sikkim');
+                        states.options[23] = new Option('Tamil Nadu', 'Tamil_Nadu');
+                        states.options[24] = new Option('Telangana', 'Telangana');
+                        states.options[25] = new Option('Tripura', 'Tripura');
+                        states.options[26] = new Option('Uttar Pradesh', 'Uttar_Pradesh');
+                        states.options[27] = new Option('Uttarakhand', 'Uttarakhand');
+                        states.options[28] = new Option('West Bengal', 'West_Bengal');
+                        // Add more states as needed with their names and corresponding values
+                    }
+                    
+                    function print_city(stateEle, cityIndex) {
+                        var cities = document.getElementById(stateEle);
+                        cities.innerHTML = '';
+                        switch (cityIndex) {
+                            case 1: // Andhra Pradesh
+                    cities.options[0] = new Option('Visakhapatnam', 'Visakhapatnam');
+                    cities.options[1] = new Option('Vijayawada', 'Vijayawada');
+                    cities.options[2] = new Option('Guntur', 'Guntur');
+                    cities.options[3] = new Option('Nellore', 'Nellore');
+                    cities.options[4] = new Option('Kurnool', 'Kurnool');
+                    break;
+                    case 2: // Arunachal Pradesh
+                    cities.options[0] = new Option('Itanagar', 'Itanagar');
+                    cities.options[1] = new Option('Naharlagun', 'Naharlagun');
+                    cities.options[2] = new Option('Pasighat', 'Pasighat');
+                    cities.options[3] = new Option('Tawang', 'Tawang');
+                    cities.options[4] = new Option('Ziro', 'Ziro');
+                    break;
+                    case 3: // Assam
+                    cities.options[0] = new Option('Guwahati', 'Guwahati');
+                    cities.options[1] = new Option('Silchar', 'Silchar');
+                    cities.options[2] = new Option('Dibrugarh', 'Dibrugarh');
+                    cities.options[3] = new Option('Jorhat', 'Jorhat');
+                    cities.options[4] = new Option('Nagaon', 'Nagaon');
+                    break;
+                    case 4: // Bihar
+                    cities.options[0] = new Option('Patna', 'Patna');
+                    cities.options[1] = new Option('Gaya', 'Gaya');
+                    cities.options[2] = new Option('Bhagalpur', 'Bhagalpur');
+                    cities.options[3] = new Option('Muzaffarpur', 'Muzaffarpur');
+                    cities.options[4] = new Option('Purnia', 'Purnia');
+                    break;
+                    case 5: // Chhattisgarh
+                    cities.options[0] = new Option('Raipur', 'Raipur');
+                    cities.options[1] = new Option('Bhilai', 'Bhilai');
+                    cities.options[2] = new Option('Bilaspur', 'Bilaspur');
+                    cities.options[3] = new Option('Korba', 'Korba');
+                    cities.options[4] = new Option('Durg', 'Durg');
+                    break;
+                    case 6: // Goa
+                    cities.options[0] = new Option('Panaji', 'Panaji');
+                    cities.options[1] = new Option('Margao', 'Margao');
+                    cities.options[2] = new Option('Vasco da Gama', 'Vasco_da_Gama');
+                    cities.options[3] = new Option('Ponda', 'Ponda');
+                    cities.options[4] = new Option('Mapusa', 'Mapusa');
+                    break;
+                    case 7: // Gujarat
+                    cities.options[0] = new Option('Ahmedabad', 'Ahmedabad');
+                    cities.options[1] = new Option('Surat', 'Surat');
+                    cities.options[2] = new Option('Vadodara', 'Vadodara');
+                    cities.options[3] = new Option('Rajkot', 'Rajkot');
+                    cities.options[4] = new Option('Gandhinagar', 'Gandhinagar');
+                    break;
+                    case 8: // Haryana
+                    cities.options[0] = new Option('Faridabad', 'Faridabad');
+                    cities.options[1] = new Option('Gurgaon', 'Gurgaon');
+                    cities.options[2] = new Option('Panipat', 'Panipat');
+                    cities.options[3] = new Option('Ambala', 'Ambala');
+                    cities.options[4] = new Option('Karnal', 'Karnal');
+                    break;
+                    case 9: // Himachal Pradesh
+                    cities.options[0] = new Option('Shimla', 'Shimla');
+                    cities.options[1] = new Option('Manali', 'Manali');
+                    cities.options[2] = new Option('Dharamshala', 'Dharamshala');
+                    cities.options[3] = new Option('Kullu', 'Kullu');
+                    cities.options[4] = new Option('Dalhousie', 'Dalhousie');
+                    break;
+                    case 10: // Jharkhand
+                    cities.options[0] = new Option('Ranchi', 'Ranchi');
+                    cities.options[1] = new Option('Jamshedpur', 'Jamshedpur');
+                    cities.options[2] = new Option('Dhanbad', 'Dhanbad');
+                    cities.options[3] = new Option('Bokaro', 'Bokaro');
+                    cities.options[4] = new Option('Deoghar', 'Deoghar');
+                    break;
+                    case 11: // Karnataka
+                    cities.options[0] = new Option('Bangalore', 'Bangalore');
+                    cities.options[1] = new Option('Mysore', 'Mysore');
+                    cities.options[2] = new Option('Hubli-Dharwad', 'Hubli-Dharwad');
+                    cities.options[3] = new Option('Mangalore', 'Mangalore');
+                    cities.options[4] = new Option('Belgaum', 'Belgaum');
+                    break;
+                    case 12: // Kerala
+                    cities.options[0] = new Option('Thiruvananthapuram', 'Thiruvananthapuram');
+                    cities.options[1] = new Option('Kochi', 'Kochi');
+                    cities.options[2] = new Option('Kozhikode', 'Kozhikode');
+                    cities.options[3] = new Option('Thrissur', 'Thrissur');
+                    cities.options[4] = new Option('Kollam', 'Kollam');
+                    break;
+                    case 13: // Madhya Pradesh
+                    cities.options[0] = new Option('Indore', 'Indore');
+                    cities.options[1] = new Option('Bhopal', 'Bhopal');
+                    cities.options[2] = new Option('Jabalpur', 'Jabalpur');
+                    cities.options[3] = new Option('Gwalior', 'Gwalior');
+                    cities.options[4] = new Option('Ujjain', 'Ujjain');
+                    break;
+                    case 14: // Maharashtra
+                    cities.options[0] = new Option('Mumbai', 'Mumbai');
+                    cities.options[1] = new Option('Pune', 'Pune');
+                    cities.options[2] = new Option('Nagpur', 'Nagpur');
+                    cities.options[3] = new Option('Nashik', 'Nashik');
+                    cities.options[4] = new Option('Aurangabad', 'Aurangabad');
+                    break;
+                    case 15: // Manipur
+                    cities.options[0] = new Option('Imphal', 'Imphal');
+                    cities.options[1] = new Option('Thoubal', 'Thoubal');
+                    cities.options[2] = new Option('Bishnupur', 'Bishnupur');
+                    cities.options[3] = new Option('Churachandpur', 'Churachandpur');
+                    cities.options[4] = new Option('Senapati', 'Senapati');
+                    break;
+                    case 16: // Meghalaya
+                    cities.options[0] = new Option('Shillong', 'Shillong');
+                    cities.options[1] = new Option('Tura', 'Tura');
+                    cities.options[2] = new Option('Jowai', 'Jowai');
+                    cities.options[3] = new Option('Nongpoh', 'Nongpoh');
+                    cities.options[4] = new Option('Williamnagar', 'Williamnagar');
+                    break;
+                    case 17: // Mizoram
+                    cities.options[0] = new Option('Aizawl', 'Aizawl');
+                    cities.options[1] = new Option('Lunglei', 'Lunglei');
+                    cities.options[2] = new Option('Saiha', 'Saiha');
+                    cities.options[3] = new Option('Champhai', 'Champhai');
+                    cities.options[4] = new Option('Serchhip', 'Serchhip');
+                    break;
+                    case 18: // Nagaland
+                    cities.options[0] = new Option('Kohima', 'Kohima');
+                    cities.options[1] = new Option('Dimapur', 'Dimapur');
+                    cities.options[2] = new Option('Mokokchung', 'Mokokchung');
+                    cities.options[3] = new Option('Tuensang', 'Tuensang');
+                    cities.options[4] = new Option('Wokha', 'Wokha');
+                    break;
+                    case 19: // Odisha
+                    cities.options[0] = new Option('Bhubaneswar', 'Bhubaneswar');
+                    cities.options[1] = new Option('Cuttack', 'Cuttack');
+                    cities.options[2] = new Option('Rourkela', 'Rourkela');
+                    cities.options[3] = new Option('Berhampur', 'Berhampur');
+                    cities.options[4] = new Option('Sambalpur', 'Sambalpur');
+                    break;
+                    case 20: // Punjab
+                    cities.options[0] = new Option('Ludhiana', 'Ludhiana');
+                    cities.options[1] = new Option('Amritsar', 'Amritsar');
+                    cities.options[2] = new Option('Jalandhar', 'Jalandhar');
+                    cities.options[3] = new Option('Patiala', 'Patiala');
+                    cities.options[4] = new Option('Bathinda', 'Bathinda');
+                    break;
+                    case 21: // Rajasthan
+                    cities.options[0] = new Option('Jaipur', 'Jaipur');
+                    cities.options[1] = new Option('Jodhpur', 'Jodhpur');
+                    cities.options[2] = new Option('Udaipur', 'Udaipur');
+                    cities.options[3] = new Option('Kota', 'Kota');
+                    cities.options[4] = new Option('Bikaner', 'Bikaner');
+                    break;
+                    case 22: // Sikkim
+                    cities.options[0] = new Option('Gangtok', 'Gangtok');
+                    cities.options[1] = new Option('Namchi', 'Namchi');
+                    cities.options[2] = new Option('Mangan', 'Mangan');
+                    cities.options[3] = new Option('Ravangla', 'Ravangla');
+                    cities.options[4] = new Option('Singtam', 'Singtam');
+                    break;
+                    case 23: // Tamil Nadu
+                    cities.options[0] = new Option('Chennai', 'Chennai');
+                    cities.options[1] = new Option('Coimbatore', 'Coimbatore');
+                    cities.options[2] = new Option('Madurai', 'Madurai');
+                    cities.options[3] = new Option('Tiruchirappalli', 'Tiruchirappalli');
+                    cities.options[4] = new Option('Salem', 'Salem');
+                    break;
+                    case 24: // Telangana
+                    cities.options[0] = new Option('Hyderabad', 'Hyderabad');
+                    cities.options[1] = new Option('Warangal', 'Warangal');
+                    cities.options[2] = new Option('Nizamabad', 'Nizamabad');
+                    cities.options[3] = new Option('Karimnagar', 'Karimnagar');
+                    cities.options[4] = new Option('Ramagundam', 'Ramagundam');
+                    break;
+                    case 25: // Tripura
+                    cities.options[0] = new Option('Agartala', 'Agartala');
+                    cities.options[1] = new Option('Udaipur', 'Udaipur');
+                    cities.options[2] = new Option('Dharmanagar', 'Dharmanagar');
+                    cities.options[3] = new Option('Kailasahar', 'Kailasahar');
+                    cities.options[4] = new Option('Belonia', 'Belonia');
+                    break;
+                    case 26: // Uttar Pradesh
+                    cities.options[0] = new Option('Lucknow', 'Lucknow');
+                    cities.options[1] = new Option('Kanpur', 'Kanpur');
+                    cities.options[2] = new Option('Agra', 'Agra');
+                    cities.options[3] = new Option('Varanasi', 'Varanasi');
+                    cities.options[4] = new Option('Meerut', 'Meerut');
+                    break;
+                    case 27: // Uttarakhand
+                    cities.options[0] = new Option('Dehradun', 'Dehradun');
+                    cities.options[1] = new Option('Haridwar', 'Haridwar');
+                    cities.options[2] = new Option('Rishikesh', 'Rishikesh');
+                    cities.options[3] = new Option('Nainital', 'Nainital');
+                    cities.options[4] = new Option('Mussoorie', 'Mussoorie');
+                    break;
+                    case 28: // West Bengal
+                    cities.options[0] = new Option('Kolkata', 'Kolkata');
+                    cities.options[1] = new Option('Asansol', 'Asansol');
+                    cities.options[2] = new Option('Siliguri', 'Siliguri');
+                    cities.options[3] = new Option('Durgapur', 'Durgapur');
+                    cities.options[4] = new Option('Howrah', 'Howrah');
+                    break;
+                    
+                            // Add more cases for additional states
+                            default:
+                                cities.options[0] = new Option('Select City', '');
+                        }
+                    }
+                    print_state("sts");
+                    </script>
+            </div>
+            <div class="d-flex justify-content-center">
+                <button type="submit"><i class="fas fa-search"></i> Predict</button> <!-- Added icon -->
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content  %}
+<style>
+    hr{
+        border: none;
+        background-color: orange;
+        height: 5px;
+    }
+    .jumbotron{
+        background: linear-gradient(-135deg, #ef5330, #6dbb46);
+        padding: 10px;
+        color: black;
+        margin-bottom: 10px;
+        border: 1px solid black;
+        
+      }
+</style>
+<div class="jumbotron">
+    <h2>{{ title }}</h2>
+    <hr>
+    <h3>The recommended crop for your conditions is: </h3>
+    <h1 style="text-decoration: underline;"><strong>{{ final_prediction }}</strong></h1>
+</div>
+{% endblock  %}

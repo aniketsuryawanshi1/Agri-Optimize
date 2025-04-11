@@ -1,0 +1,214 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<style>
+    #service{
+        padding: 20px;
+        background: linear-gradient(-135deg, #6dbb46, #ef5330);
+    }
+    hr {
+            border: none; /* Remove the default border */
+            background-color: orange; /* Set the color */
+            height: 5px; /* Set the desired thickness */
+        }
+</style>
+
+
+        <!--Slider Section Start-->
+            <section class="service">
+                <div class="flude-container">
+                <!-- carousel -->
+                <div class="carousel">
+                    <!-- list item -->
+                    <div class="list">
+                        <div class="item">
+                            <img src="{% static "img/1.jpg" %}">
+                            <div class="content">
+                                <div class="author">Plant </div>
+                                <div class="title">Disease Detection: </div>
+                                <div class="topic">Safeguarding Agricultural Health</div>
+                                <div class="des">
+                                    <!-- lorem 50 -->
+                                    
+                                </div>
+                                <div class="buttons">
+                                    <button>SEE MORE</button>
+                                    <button>SUBSCRIBE</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <img src="{% static "img/2.jpg" %}">
+                            <div class="content">
+                                <div class="author">Guard</div>
+                                <div class="title"> Your Greenery</div>
+                                <div class="topic">Secure Your Harvests!</div>
+                                <div class="des">
+
+                                </div>
+                                <div class="buttons">
+                                    <button>SEE MORE</button>
+                                    <button>SUBSCRIBE</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <img src="{% static "img/3.png" %}">
+                            <div class="content">
+                                <div class="author">Nurturing </div>
+                                <div class="title"> Nature, One</div>
+                                <div class="topic">Leaf at a Time!</div>
+                                <div class="des">
+          
+                                </div>
+                                <div class="buttons">
+                                    <button>SEE MORE</button>
+                                    <button>SUBSCRIBE</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <img src="{% static "img/4.jpg" %}">
+                            <div class="content">
+                                <div class="author">Nurturing </div>
+                                <div class="title">Nature, One </div>
+                                <div class="topic">Leaf at a Time!</div>
+                                <div class="des">
+          
+                                </div>
+                                <div class="buttons">
+                                    <button>SEE MORE</button>
+                                    <button>SUBSCRIBE</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- list thumnail -->
+                    <div class="thumbnail">
+                        <div class="item">
+                            <img src="{% static "img/1.jpg" %}">
+                            <div class="content">
+                                <div class="title">
+                                    Name Slider
+                                </div>
+                                <div class="description">
+                                    Description
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <img src="{% static "img/2.jpg" %}">
+                            <div class="content">
+                                <div class="title">
+                                    Name Slider
+                                </div>
+                                <div class="description">
+                                    Description
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <img src="{% static "img/3.png" %}">
+                            <div class="content">
+                                <div class="title">
+                                    Name Slider
+                                </div>
+                                <div class="description">
+                                    Description
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <img src="{% static "img/4.jpg" %}">
+                            <div class="content">
+                                <div class="title">
+                                    Name Slider
+                                </div>
+                                <div class="description">
+                                    Description
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- next prev -->
+            
+                    <div class="arrows">
+                        <button id="prev"><</button>
+                        <button id="next">></button>
+                    </div>
+                    <!-- time running -->
+                    <div class="time"></div>
+                </div>
+            </div>
+            </section>
+        <!--Slider Section End-->
+
+           <!---Services Section -->        
+           <section id="service">
+            <h1 style=" color: white; text-align: center;" >Services</h1>
+            <hr>
+            <div class="wrapper">
+                <div class="box">
+                   <div class="front-face">
+                      <div class="icon">
+                        <i class="fas fa-leaf fa-beat-fade" style="--fa-primary-color: #a9746a; --fa-secondary-color: #44cf47;"></i>
+                      </div>
+                      <span>Plant Disease</span>
+                   </div>
+                   <div class="back-face">
+                      <span>Plant Disease</span>
+                      <p>
+                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Amet aut odit eligendi inventore soluta minima recusandae maxime, corporis delectus asperiores, omnis impedit fugit sint fugiat consectetur odio nihil quae nesciunt?
+                      </p>
+                   </div>
+                </div>
+                <div class="box">
+                   <div class="front-face">
+                      <div class="icon">
+                        <i class="fa-solid fa-camera fa-beat-fade"></i>
+                      </div>
+                      <span>By Camera</span>
+                   </div>
+                   <div class="back-face">
+                      <span>By Camera</span>
+                      <p>
+                         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Esse sint et, eum nesciunt fuga exercitationem dolorem obcaecati cupiditate aperiam quasi assumenda nemo, vitae id veniam laborum nam sequi voluptatibus perspiciatis.
+                      </p>
+                   </div>
+                </div>
+                <div class="box">
+                   <div class="front-face">
+                      <div class="icon">
+            <!-- Example of using an animated icon -->
+                        <i class="fas fa-spinner fa-spin"></i>
+                      </div>
+                      <span>Soil Fertilization</span>
+                   </div>
+                   <div class="back-face">
+                      <span>Soil Fertilization</span>
+                      <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam explicabo voluptatem ipsa iusto! Aut tempora, dolorem laborum dolorum facere porro quibusdam numquam saepe unde ad et aliquam voluptatum, aliquid minus.
+                      </p>
+                   </div>
+                </div>
+                <div class="box">
+                    <div class="front-face">
+                       <div class="icon">
+                         <i class="fa-solid fa-seedling fa-fade" style="color: #63E6BE;"></i>
+                       </div>
+                       <span>Crop Recommendation</span>
+                    </div>
+                    <div class="back-face">
+                       <span>Crop Recommendation</span>
+                       <p>
+                          Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi quidem, amet blanditiis eos dolorum sit eius id. Dolorum, necessitatibus reiciendis libero fugit obcaecati iusto? Hic aut ab maiores soluta consectetur!
+                       </p>
+                    </div>
+                 </div>
+             </div>            
+    
+       
+        <!--Services Section End Hare -->
+{% endblock content %}

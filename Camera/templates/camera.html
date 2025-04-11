@@ -1,0 +1,305 @@
+
+
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        section {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 200px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+        margin-top: 90px;
+        margin-bottom: 50px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            max-width: 800px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+            margin: 10px;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        #videoElement, #capturedPhoto {
+            width: 400px;
+            height: 300px;
+            border-radius: 10px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 10px auto;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .icon {
+            margin-right: 5px;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+        }
+
+        .predicted-results {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .predicted-results img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+<section>
+        <div class="container">
+        <div class="card">
+            <button id="openCameraBtn"><i class="fas fa-camera icon"></i>Open Camera</button>
+            <div id="cameraDisplay" style="display: none;">
+                <video id="videoElement" autoplay></video>
+                <br>
+                <button id="closeCameraBtn"><i class="fas fa-times icon"></i>Close Camera</button>
+                <button id="takePhotoBtn"><i class="fas fa-camera icon"></i>Take Photo</button>
+            </div>
+            <div id="photoDisplay" style="display: none;">
+                <img id="capturedPhoto">
+                <br>
+                <form id="photoForm" method="post" action="{% url 'camera' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" name="image_data" id="imageDataField">
+                    <button type="button" id="savePhotoBtn"><i class="fas fa-save icon"></i>Save Photo</button>
+                    <button type="button" id="retakeBtn"><i class="fas fa-redo icon"></i>Retake</button>
+                    <button type="button" id="closePhotoBtn"><i class="fas fa-times icon"></i>Close Photo</button>
+                </form>
+            </div>
+            <div class="predicted-results" id="predictedResults">
+                <h2>Predicted Disease Information</h2>
+                <p><strong>Title:</strong> <span id="predictedTitle"></span></p>
+                <p><strong>Description:</strong> <span id="predictedDescription"></span></p>
+
+                <h2>Predicted Supplement Information</h2>
+                <p><strong>Supplement Name:</strong> <span id="predictedSupplementName"></span></p>
+                <a href="" id="predictedSupplementBuyLink" target="_blank">Buy Supplement</a>
+                <br>
+                <br>
+                    <img src="" alt="Supplement Image" id="predictedSupplementImage">
+
+            </div>
+        </div>
+    </div>
+
+    <div id="successPopup" class="popup">
+        <p>Photo saved successfully!</p>
+    </div>
+</section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            var video = document.getElementById('videoElement');
+            var canvas = document.createElement('canvas');
+            var photoDisplay = $('#photoDisplay');
+            var cameraDisplay = $('#cameraDisplay');
+            var successPopup = $('#successPopup');
+
+    
+            $('#openCameraBtn').click(function () {
+                cameraDisplay.show();
+                openCamera();
+            });
+    
+            $('#closeCameraBtn').click(function () {
+                closeCamera();
+            });
+    
+            $('#takePhotoBtn').click(function () {
+                takePhoto();
+            });
+    
+            $('#savePhotoBtn').click(function () {
+                savePhoto();
+            });
+    
+            $('#retakeBtn').click(function () {
+                retakePhoto();
+            });
+    
+            $('#closePhotoBtn').click(function () {
+                closePhoto();
+            });
+    
+            function openCamera() {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(function (stream) {
+                        video.srcObject = stream;
+                    })
+                    .catch(function (error) {
+                        console.log("Something went wrong!", error);
+                    });
+            }
+    
+            function closeCamera() {
+                var stream = video.srcObject;
+                var tracks = stream.getTracks();
+    
+                tracks.forEach(function (track) {
+                    track.stop();
+                });
+    
+                video.srcObject = null;
+                cameraDisplay.hide();
+            }
+    
+            function takePhoto() {
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+                var photoURL = canvas.toDataURL('image/png');
+                $('#capturedPhoto').attr('src', photoURL);
+    
+                // Assign the Data URL to the hidden input field
+                $('#imageDataField').val(photoURL);  // Pass the data URL to the hidden input field
+    
+                photoDisplay.show();
+                cameraDisplay.hide();
+            }
+    
+            function savePhoto() {
+                // Ensure that image data is provided
+                var imageData = $('#imageDataField').val();
+                if (!imageData) {
+                    alert("Please capture a photo first.");
+                    return;
+                }
+    
+                // Convert data URL to Blob object
+                var blob = dataURLtoBlob(imageData);
+                // Create FormData object
+                var formData = new FormData();
+                formData.append('image_data', blob, 'photo.png');
+    
+                // Obtain CSRF token value from cookie
+                var csrftoken = getCookie('csrftoken');
+    
+                // Submit form using AJAX with CSRF token included in headers
+            $.ajax({
+    url: "{% url 'camera' %}",
+    type: "POST",
+    data: formData,
+    processData: false,
+    contentType: false,
+    headers: { "X-CSRFToken": csrftoken },
+    success: function (response) {
+        console.log("Response received:", response); // Debug statement
+        if (response.error) {
+            console.error("Error occurred:", response.error);
+        } else {
+            displayPredictedResults(response);
+        }
+    },
+    error: function (xhr, status, error) {
+        console.error("Error occurred:", error);
+    },
+    complete: function() {
+        closeCamera();
+    }
+});
+            }
+    
+            function retakePhoto() {
+                photoDisplay.hide();
+                cameraDisplay.show();
+            }
+    
+            function closePhoto() {
+                photoDisplay.hide();
+                cameraDisplay.show();
+            }
+    
+            // Function to convert data URL to Blob object
+            function dataURLtoBlob(dataURL) {
+                var parts = dataURL.split(';base64,');
+                var contentType = parts[0].split(':')[1];
+                var raw = window.atob(parts[1]);
+                var rawLength = raw.length;
+                var uInt8Array = new Uint8Array(rawLength);
+                for (var i = 0; i < rawLength; ++i) {
+                    uInt8Array[i] = raw.charCodeAt(i);
+                }
+                return new Blob([uInt8Array], { type: contentType });
+            }
+    
+            // Function to retrieve CSRF token from cookie
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = cookies[i].trim();
+                        // Check if the cookie name matches the desired name
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+            function displayPredictedResults(response) {
+    console.log("Displaying predicted results:", response); // Debug statement
+    $('#predictedTitle').text(response.title)
+    $('#predictedDescription').text(response.description)
+    $('#predictedPrevent').text(response.prevent);
+    $('#predictedPreventImage').attr('src', response.image_url);
+    $('#predictedSupplementName').text(response.supplement_name);
+    $('#predictedSupplementImage').attr('src', response.supplement_image_url);
+    $('#predictedSupplementBuyLink').attr('href', response.supplement_buy_link);
+    $('#predictedResults').show();
+    openCameraBtnPredicted.show();
+}
+        });
+    </script>
+    
+{% endblock %}

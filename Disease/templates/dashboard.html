@@ -1,0 +1,102 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+    .jumbotron{
+    background: linear-gradient(-135deg, #ef5330, #6dbb46);
+    padding: 10px;
+    color: black;
+    margin-bottom: 10px;
+    border: 1px solid black;
+    
+  }
+  #service{
+  margin: 50px auto;
+  }
+  hr{
+    border: none;
+    background-color: orange;
+    height: 5px;
+  }
+</style>
+
+<div class="jumbotron">
+    <h1>Dashboard</h1>
+    <hr>
+    <<h1>Welcome, {{ username }}!</h1>
+    <h1>Your email address is : {{ user_email }}</h1>
+</div>
+
+
+
+       <!---Services Section -->        
+       <section id="service">
+        <div class="wrapper">
+            <div class="box">
+               <div class="front-face">
+                  <div class="icon">
+                    <i class="fas fa-leaf fa-beat-fade" style="--fa-primary-color: #a9746a; --fa-secondary-color: #44cf47;"></i>
+                  </div>
+                  <span>Plant Disease</span>
+               </div>
+               <div class="back-face">
+                  <span>Plant Disease</span>
+                  <p>
+                    <a class="one" href="{% url 'accept' %}">Start-></a>
+                  </p>
+               </div>
+            </div>
+            <div class="box">
+               <div class="front-face">
+                  <div class="icon">
+                    <i class="fa-solid fa-camera fa-beat-fade"></i>
+                  </div>
+                  <span>By Camera</span>
+               </div>
+               <div class="back-face">
+                  <span>By Camera</span>
+                  <p>
+                     <a class="one" href="{% url 'camera' %}">Start-></a>
+                  </p>
+               </div>
+            </div>
+            <div class="box">
+               <div class="front-face">
+                  <div class="icon">
+<!-- Example of using an animated icon -->
+                    <i class="fas fa-spinner fa-spin"></i>
+                  </div>
+                  <span>Soil Fertilization</span>
+               </div>
+               <div class="back-face">
+                  <span>Soil Fertilization</span>
+                  <p>
+                    <a class="one" href="{% url 'fertilizer' %}">Start-></a>
+                  </p>
+               </div>
+            </div>
+            <div class="box">
+                <div class="front-face">
+                   <div class="icon">
+                     <i class="fa-solid fa-seedling fa-fade" style="color: #63E6BE;"></i>
+                   </div>
+                   <span>Crop Recommendation</span>
+                </div>
+                <div class="back-face">
+                   <span>Crop Recommendation</span>
+                   <p>
+                      <a class="one" href="{% url 'crop' %}">Start-></a>
+                   </p>
+                </div>
+             </div>
+         </div>            
+
+    </section>
+    <!--Services Section End Hare -->
+
+
+{% endblock  %}
+
+
